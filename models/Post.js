@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
 
 import { composeWithMongoose } from 'graphql-compose-mongoose';
@@ -14,16 +14,14 @@ const PostSchema = new Schema({
   body: {
     type: String,
     required: true
+  },
+
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 
 const Post = mongoose.model("post", PostSchema);
 
-
-const customizationOptions = {}
-
-// left it empty for simplicity, described below
-const PostTC = composeWithMongoose(Post, customizationOptions);
-
-
-export default PostTC
+export default Post

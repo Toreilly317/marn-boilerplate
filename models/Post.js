@@ -1,9 +1,6 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema;
 
-import { composeWithMongoose } from 'graphql-compose-mongoose';
-
-
 const PostSchema = new Schema({
 
   title: {
@@ -20,8 +17,10 @@ const PostSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
-});
+}, {
+    timestamps: true
+  });
 
-const Post = mongoose.model("post", PostSchema);
+const Post = mongoose.model("Post", PostSchema);
 
 export default Post

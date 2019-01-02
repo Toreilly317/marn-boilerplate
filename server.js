@@ -12,19 +12,25 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true })
 // next.js setup
 const port = process.env.PORT || 3000;
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
-const handle = app.getRequestHandler();
+const nextApp = next({ dev });
+const handle = nextApp.getRequestHandler();
 
 
-app.prepare().then(() => {
-  const apollo = new ApolloServer({ schema });
+nextApp.prepare().then(() => {
+  const server = new ApolloServer({ schema });
 
   const app = express();
-  apollo.applyMiddleware({ app });
+  server.applyMiddleware({ app });
+
+  app.get('/post/:id', (req, res) => {
+    const actualPage = '/post'
+    const queryParams = { title: req.params.id }
+    nextApp.render(req, res, actualPage, queryParams)
+  })
 
   app.get('*', (req, res) => handle(req, res));
 
   app.listen({ port }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000${apollo.graphqlPath}`)
-  );
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  )
 });

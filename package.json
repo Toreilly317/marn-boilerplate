@@ -4,7 +4,8 @@
   "description": "a boilerplate to get started with MongoDB Apollo React and Node",
   "main": "index.js",
   "scripts": {
-    "dev": "node -r esm server.js",
+    "dev": "nodemon -r esm server.js",
+    "seed": "nodemon -r esm ./lib/seed-db/index.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "heroku-postbuild": "next build",
@@ -22,17 +23,13 @@
     "esm": "^3.0.84",
     "graphql": "^14.0.2",
     "graphql-compose": "^5.4.0",
-    "graphql-compose-connection": "^4.0.0",
-    "graphql-compose-mongoose": "^5.2.1",
-    "graphql-compose-pagination": "^4.0.0",
+    "graphql-tools": "^4.0.3",
     "isomorphic-unfetch": "^3.0.0",
     "joi": "^14.3.0",
     "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
-    "merge-graphql-schemas": "^1.5.8",
     "mongoose": "^5.4.1",
     "next": "^7.0.2",
-    "nprogress": "^0.2.0",
     "passport": "^0.4.0",
     "react": "^16.7.0",
     "react-apollo": "^2.3.3",
@@ -40,7 +37,11 @@
     "styled-components": "^4.1.3"
   },
   "devDependencies": {
+    "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-styled-components": "^1.10.0",
+    "faker": "^4.1.0",
+    "mongoose-dummy": "^1.0.8",
+    "mongoose-seed": "^0.5.1",
     "nodemon": "^1.18.9"
   },
   "directories": {

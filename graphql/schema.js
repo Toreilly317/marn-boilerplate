@@ -1,20 +1,38 @@
-import { schemaComposer } from 'graphql-compose';
+import { makeExecutableSchema } from 'graphql-tools'
+import { typeDef as Author } from './typeDefs/author.js'
+import { typeDef as Book } from './typeDefs/book.js'
 
-import { userQueries, userMutations } from './UserSchema';
+const Query = `
+  type Query {
+    author(id: Int!): Book
+    book(id: Int!): Author
+  }
+`
 
-import { postQueries, postMutations } from './PostSchema';
+const resolvers = {
+  Query: {
+    author: () => {
+      console.log('author')
+    },
+    book: () => {
+      console.log('books')
+    }
+  },
+  Author: {
+    name: () => {
+      console.log('author')
+    }
+  },
+  Book: {
+    title: () => {
+      console.log('books')
+    }
+  }
+}
 
-schemaComposer.Query.addFields({
-  ...userQueries,
-  ...postQueries
+const schema = makeExecutableSchema({
+  typeDefs: [Query, Author, Book],
+  resolvers: {}
 })
 
-schemaComposer.Mutation.addFields({
-  ...userMutations,
-  ...postMutations,
-
-})
-
-const schema = schemaComposer.buildSchema();
-
-export default schema;
+export default schema

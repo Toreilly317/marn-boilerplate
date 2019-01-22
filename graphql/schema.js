@@ -1,38 +1,34 @@
-import { makeExecutableSchema } from 'graphql-tools'
-import { typeDef as Author } from './typeDefs/author.js'
-import { typeDef as Book } from './typeDefs/book.js'
+const merge = require('lodash/merge')
+const { makeExecutableSchema } = require('graphql-tools')
 
-const Query = `
+const userTypes = require('./users/userTypes')
+const userResolvers = require('./users/userResolvers')
+const postTypes = require('./posts/postTypes')
+// const postResolvers = require('./posts/postResolvers')
+const { gql } = require('apollo-server')
+
+const Query = gql`
   type Query {
-    author(id: Int!): Book
-    book(id: Int!): Author
+    #User Queries
+    _empty: String
   }
 `
 
-const resolvers = {
-  Query: {
-    author: () => {
-      console.log('author')
-    },
-    book: () => {
-      console.log('books')
-    }
-  },
-  Author: {
-    name: () => {
-      console.log('author')
-    }
-  },
-  Book: {
-    title: () => {
-      console.log('books')
-    }
+const Mutation = gql`
+  type Mutation {
+    _empty: String
   }
-}
+`
+
+//currently we need to have these two dummy variables.
+//This allows us to extend Query and Mutation within out types files
+
+const typeDefs = [Query, Mutation, userTypes, postTypes]
+const resolvers = merge(userResolvers)
 
 const schema = makeExecutableSchema({
-  typeDefs: [Query, Author, Book],
-  resolvers: {}
+  typeDefs,
+  resolvers
 })
 
-export default schema
+module.exports = schema

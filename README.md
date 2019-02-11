@@ -6,7 +6,7 @@ A modern boilerplate to get you up and running
 
 This project requires [Node.js](https://nodejs.org/) v8+ to run.
 
-### 1. Install the dependencies and devDependencies and start the server.
+### 1. Install the dependencies and devDependencies
 
 ```sh
 $ git clone https://github.com/Toreilly317/marn-boilerplate.git
@@ -18,7 +18,7 @@ $ npm install
 
 Open `.sample.env` fill in all fields then save the file and rename it to `.env`
 
-### 3. Install the dependencies and devDependencies and start the server.
+### 3. Start the dev server.
 
 ```sh
 $ npm run dev

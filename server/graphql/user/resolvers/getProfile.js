@@ -1,0 +1,1 @@
+const getProfile = async token => {}

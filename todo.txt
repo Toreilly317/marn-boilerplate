@@ -1,0 +1,7 @@
+//connect to auth
+//create connections for social profiles
+ - FB, Twitter, Pintrest, Instagram, Google,
+
+ //create verification email service
+
+ 

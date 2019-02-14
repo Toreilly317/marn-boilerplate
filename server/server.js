@@ -1,12 +1,10 @@
 require('dotenv')
 const next = require('next')
 const express = require('express')
-
-const session = require('express-session')
-const MongoStore = require('connect-mongo')(session)
+const passport = require('passport')
 const { ApolloServer } = require('apollo-server-express')
-const schema = require('./graphql/schema')
 const mongoose = require('mongoose')
+const schema = require('./graphql/schema')
 
 const models = require('./models')
 
@@ -24,32 +22,19 @@ mongoose
 nextApp.prepare().then(() => {
   const app = express()
 
-  //create the session with monogo as session store
-  app.use(
-    session({
-      name: 'charm.sid',
-      secret: process.env.SECRET,
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        httpOnly: true,
-        secure: process.env === 'production',
-        maxAge: 14 * 24 * 60 * 60 * 1000 // expires in 14 day
-      },
-      store: new MongoStore({
-        mongooseConnection: mongoose.connection,
-        ttl: 14 * 24 * 60 * 60 // save session 14 days
-      })
-    })
-  )
+  app.use(passport.initialize())
+  require('../lib/passport')(passport)
+
 
   const server = new ApolloServer({
     schema,
     playground: process.env !== 'production',
-    context: async ({ req }) => {
-      const { user, session } = req
-      return { models, session, user }
-    }
+    context: async ({ req, res }) => {
+      const { user } = req
+      return {
+        models, user, res,
+      }
+    },
   })
 
   server.applyMiddleware({ app })
@@ -60,13 +45,7 @@ nextApp.prepare().then(() => {
     nextApp.render(req, res, actualPage, queryParams)
   })
 
-  app.get('*', (req, res) => {
-    return handle(req, res)
-  })
+  app.get('*', (req, res) => handle(req, res))
 
-  app.listen({ port: PORT }, () =>
-    console.log(
-      `🚀 Server ready at http://localhost:${PORT}/${server.graphqlPath}`
-    )
-  )
+  app.listen({ port: PORT }, () => console.log(`🚀 Server ready at http://localhost:${PORT}/${server.graphqlPath}`))
 })

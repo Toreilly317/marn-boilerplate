@@ -45,6 +45,7 @@ const userTypes = gql`
       lastName: String
     ): JWT!
     signIn(email: String!, password: String!): Boolean!
+    signOut: Boolean!
     sayHello: String
   }
 `

@@ -1,8 +1,11 @@
 const User = require('../../../models/User')
 const Post = require('../../../models/Post')
-const { ApolloError } = require('apollo-server')
+
+
 
 const bcrypt = require('bcryptjs')
+
+const { SECRET } = process.env
 
 const userResolvers = {
   Query: {
@@ -33,7 +36,8 @@ const userResolvers = {
       return true
     },
 
-    signIn: async (root, { email, password }, { session }) => {
+    signIn: async (root, { email, password }, { res }) => {
+      console.table({ email, password })
       const user = await User.findOne({ email })
 
       if (!user) {
@@ -43,15 +47,32 @@ const userResolvers = {
       const isMatch = await bcrypt.compare(password, user.password)
 
       if (isMatch) {
-        delete user.password
-        if (session) {
-          session.user = user
-          return true
-        } else {
-        }
+        const claims = {
+          sub: user._id,
+          email: user.email,
+          iss: 'http://localhost:5000',
+          permissions: user.permission
+        };
+
+        var token = jwt.sign(claims, SECRET, {
+          expiresIn: 3600 // 1hour
+        });
+
+        res.cookie('jwt', token); // add cookie here
+        return true
       } else {
         throw new UserInputError('Password incorrect')
       }
+    },
+
+    signOut: (root, args, { session, res }) => {
+      session.destroy()
+      res.clearCookie('charm.sid', {
+        httpOnly: true,
+        secure: process.env === 'production',
+        maxAge: 14 * 24 * 60 * 60 * 1000 // expires in 14 day
+      }).status(200).send('Ok.');
+
     },
 
     sayHello: (root, args, ctx) => {

@@ -1,33 +1,30 @@
+import React from 'react'
 import { Mutation, withApollo } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import redirect from '../lib/redirect'
 
 const SIGN_IN = gql`
   mutation Signin($email: String!, $password: String!) {
-    signIn(email: $email, password: $password)
+    signIn(email: $email, password: $password) {
+      token
+    }
   }
 `
 
 // TODO: Find a better name for component.
 const SigninBox = ({ client }) => {
-  let email, password
+  let email,
+    password
 
   return (
     <Mutation
       mutation={SIGN_IN}
       onCompleted={data => {
-        console.log('Sign In Data', data)
-        // Store the token in cookie
-        if (data.signIn == true) {
-          console.log('Signed In')
-        } else {
-          console.log('not signed in')
-        }
-
+        localStorage.setItem('token', data.signIn.token)
         // Force a reload of all the current queries now that the user is
         // logged in
         client.cache.reset().then(() => {
-          redirect({}, '/admin')
+          redirect({}, '/admin/dashboard')
         })
       }}
       onError={error => {
@@ -44,8 +41,8 @@ const SigninBox = ({ client }) => {
             signIn({
               variables: {
                 email: email.value,
-                password: password.value
-              }
+                password: password.value,
+              },
             })
 
             email.value = password.value = ''
@@ -69,7 +66,7 @@ const SigninBox = ({ client }) => {
             type="password"
           />
           <br />
-          <button>Sign in</button>
+          <button type="submit">Sign in</button>
         </form>
       )}
     </Mutation>

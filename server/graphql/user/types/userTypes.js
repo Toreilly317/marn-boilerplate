@@ -38,14 +38,8 @@ const userTypes = gql`
   }
 
   extend type Mutation {
-    signUp(
-      email: String!
-      password: String!
-      firstName: String
-      lastName: String
-    ): JWT!
-    signIn(email: String!, password: String!): Boolean!
-    sayHello: String
+    signUp(email: String!, password: String!, firstName: String, lastName: String): JWT!
+    signIn(email: String!, password: String!): JWT!
   }
 `
 

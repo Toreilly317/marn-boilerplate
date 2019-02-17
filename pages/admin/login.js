@@ -6,14 +6,13 @@ import checkLoggedIn from '../../lib/checkLoggedIn'
 
 export default class Signin extends React.Component {
   static async getInitialProps(context) {
-    // const { loggedInUser } = await checkLoggedIn(context.apolloClient)
+    const { loggedInUser } = await checkLoggedIn(context.apolloClient)
 
-    // if (loggedInUser) {
-    //   console.log('Logged in as', loggedInUser)
-    //   // Already signed in? No need to continue.
-    //   // Throw them back to the main page
-    //   redirect(context, '/admin')
-    // }
+    if (loggedInUser) {
+      // Already signed in? No need to continue.
+      // Throw them back to the main page
+      redirect(context, '/admin/dashboard')
+    }
 
     return {}
   }

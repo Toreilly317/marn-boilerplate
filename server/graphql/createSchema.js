@@ -1,11 +1,11 @@
 const merge = require('lodash').merge
 
-//types
+// types
 const userTypes = require('./user/types')
 const postTypes = require('./post/types')
 
-//resolvers
-const userResolvers = require('./user/resolvers')
+// resolvers
+const userResolvers = require('./user/userResolvers')
 const postResolvers = require('./post/resolvers')
 
 const types = [userTypes, postTypes]
@@ -13,5 +13,5 @@ const resolvers = merge(userResolvers, postResolvers)
 
 module.exports = {
   types,
-  resolvers
+  resolvers,
 }

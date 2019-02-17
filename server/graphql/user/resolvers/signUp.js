@@ -4,14 +4,10 @@ const createToken = require('./createToken')
 const signUpValidation = require('../validation/signUpValidation')
 
 const signUp = async (newUser, res) => {
-  // const { errors, isValid } = signUpValidation(newUser)
-
-  // if (errors) {
-  //   throw new UserInputError(errors)
-  // }
+  // TODO validation
 
   const foundUser = await User.findOne({ email: newUser.email })
-  //if user exists throw err
+  // if user exists throw err
   if (foundUser) {
     throw new UserInputError('Email already exists')
   }
@@ -21,7 +17,7 @@ const signUp = async (newUser, res) => {
   res.cookie('id', token, {
     httpOnly: true,
     secure: process.env === 'production',
-    maxAge: 1000 * 60 * 24 * 7 // 7 days
+    maxAge: 1000 * 60 * 24 * 7, // 7 days
   })
 
   return true

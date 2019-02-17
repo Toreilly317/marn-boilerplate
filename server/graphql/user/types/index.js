@@ -2,7 +2,7 @@ const { gql } = require('apollo-boost')
 
 const userTypes = gql`
   type User {
-    _id: String!
+    id: String!
     firstName: String!
     lastName: String!
     fullName: String!
@@ -38,13 +38,8 @@ const userTypes = gql`
   }
 
   extend type Mutation {
-    signUp(
-      email: String!
-      password: String!
-      firstName: String
-      lastName: String
-    ): JWT!
-    signIn(email: String!, password: String!): Boolean!
+    signUp(email: String!, password: String!, firstName: String, lastName: String): JWT!
+    signIn(email: String!, password: String!): JWT!
     signOut: Boolean!
     sayHello: String
   }

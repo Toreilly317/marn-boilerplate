@@ -25,7 +25,7 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false
     },
-    password: { type: String, required: true, trim: true },
+    password: { type: String, required: true, trim: true, select: false },
     permission: {
       type: String,
       required: true,

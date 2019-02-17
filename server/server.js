@@ -1,42 +1,54 @@
 require('dotenv')
-const next = require('next')
-const express = require('express')
-const passport = require('passport')
 const { ApolloServer } = require('apollo-server-express')
+const express = require('express')
 const mongoose = require('mongoose')
+const next = require('next')
+const passport = require('passport')
+const models = require('./models')
+const extractUser = require('./middleware/extractUser')
 const schema = require('./graphql/schema')
 
-const models = require('./models')
-
-const { MONGO_URI, PORT, NODE_ENV } = process.env
+const {
+  MONGO_URI, PORT, NODE_ENV, ADMIN_ROUTE,
+} = process.env
 
 // next.js setup
 const dev = NODE_ENV !== 'production'
 const nextApp = next({ dev })
 const handle = nextApp.getRequestHandler()
 
-mongoose
-  .connect(MONGO_URI, { useNewUrlParser: true })
-  .then(() => console.log('DB connected'))
+mongoose.connect(MONGO_URI, { useNewUrlParser: true }).then(() => console.log('DB connected'))
 
 nextApp.prepare().then(() => {
   const app = express()
 
-  app.use(passport.initialize())
-  require('../lib/passport')(passport)
+  // add user object to every request
+  // app.use(passport.initialize())
+  // require('../lib/passport')(passport)
+  // app.use(passport.authenticate('jwt', { session: false }))
 
+  app.use(extractUser)
+  app.use((req, res, done) => {
+    console.log('Auth', req.headers.Authorization)
+    console.log('auth', req.headers.authorization)
+    done()
+  })
 
+  // start apollo server
   const server = new ApolloServer({
     schema,
     playground: process.env !== 'production',
-    context: async ({ req, res }) => {
+    context: ({ req }) => {
       const { user } = req
       return {
-        models, user, res,
+        models,
+        user,
+        req,
       }
     },
   })
 
+  // apollo server takes express as middleware
   server.applyMiddleware({ app })
 
   app.get('/post/:id', (req, res) => {
@@ -45,7 +57,9 @@ nextApp.prepare().then(() => {
     nextApp.render(req, res, actualPage, queryParams)
   })
 
-  app.get('*', (req, res) => handle(req, res))
+  app.get('*', (req, res) => {
+    handle(req, res)
+  })
 
   app.listen({ port: PORT }, () => console.log(`🚀 Server ready at http://localhost:${PORT}/${server.graphqlPath}`))
 })

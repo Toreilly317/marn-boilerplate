@@ -3,7 +3,28 @@ import { createGlobalStyle } from 'styled-components'
 import App, { Container } from 'next/app'
 import Head from 'next/head'
 import React from 'react'
+import { css, ThemeProvider } from 'styled-components'
 import withApollo from '../lib/withApollo'
+
+const theme = {
+  colors: {
+    white: '#FFFFFF',
+    gray: '#EEF1F6',
+    primary: {
+      dark: '#2A3642',
+      light: '#35414F',
+    },
+    accent: '#59c9a5',
+  },
+
+  sizes: {
+    xsm: '.5rem',
+    sm: '1rem',
+    md: '1.5rem',
+    lg: '2rem',
+    xl: '3rem',
+  },
+}
 
 const GlobalStyle = createGlobalStyle`
 *,
@@ -39,7 +60,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 5rem;
 }
   `
 
@@ -53,7 +74,9 @@ class MyApp extends App {
           <title>Charm CMS</title>
         </Head>
         <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
         </ApolloProvider>
       </Container>
     )

@@ -12,8 +12,8 @@ const userResolvers = {
     user: (root, { _id }) => User.findById(_id),
     users: (root, args, ctx, info) => User.find(),
 
-    getCurrentUser: (root, args, { user }) => {
-      console.log('checking logged in user', user)
+    getCurrentUser: (root, args, context) => {
+      const user = context.user
       return user
     },
   },
@@ -32,7 +32,7 @@ const userResolvers = {
     },
 
     signIn: async (root, { email, password }) => {
-      const user = await User.findOne({ email }).select("+password")
+      const user = await User.findOne({ email }).select('+password')
 
       if (!user) {
         throw new UserInputError('User not found with this email')
@@ -52,7 +52,7 @@ const userResolvers = {
           expiresIn: 60 * 60 * 24,
         })
 
-        return { token: `bearer ${token}` }
+        return { token: `Bearer ${token}` }
       }
       throw new UserInputError('Password incorrect')
     },

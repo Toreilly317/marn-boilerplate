@@ -3,7 +3,6 @@ const { ApolloServer } = require('apollo-server-express')
 const express = require('express')
 const mongoose = require('mongoose')
 const next = require('next')
-const passport = require('passport')
 const models = require('./models')
 const extractUser = require('./middleware/extractUser')
 const schema = require('./graphql/schema')
@@ -28,11 +27,8 @@ nextApp.prepare().then(() => {
   // app.use(passport.authenticate('jwt', { session: false }))
 
   app.use(extractUser)
-  app.use((req, res, done) => {
-    console.log('Auth', req.headers.Authorization)
-    console.log('auth', req.headers.authorization)
-    done()
-  })
+
+  // check headers
 
   // start apollo server
   const server = new ApolloServer({

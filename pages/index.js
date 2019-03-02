@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Layout from "../components/Layout/Layout"
 
 const Container = styled.div`
   display: grid;
@@ -11,9 +12,7 @@ const HeaderContainer = styled.header`
 `
 
 export default () => (
-  <Container>
-    <HeaderContainer>
-      <h1>Whats up </h1>
-    </HeaderContainer>
-  </Container>
+  <Layout>
+    <h1>This is the content Area</h1>
+  </Layout>
 )

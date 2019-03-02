@@ -8,13 +8,9 @@ import withApollo from '../lib/withApollo'
 
 const theme = {
   colors: {
-    white: '#FFFFFF',
-    gray: '#EEF1F6',
-    primary: {
-      dark: '#2A3642',
-      light: '#35414F',
-    },
-    accent: '#59c9a5',
+    primary: '#2C2C34',
+    secondary: '#494850',
+    accent: '#978897',
   },
 
   sizes: {
@@ -24,9 +20,19 @@ const theme = {
     lg: '2rem',
     xl: '3rem',
   },
+  typography: {
+    xsm: '1.2rem',
+    sm: '1.6rem',
+    md: '2rem',
+    lg: '2.5rem',
+    xl: '3rem',
+    xxl: '5rem',
+  },
 }
 
 const GlobalStyle = createGlobalStyle`
+ @import url('https://fonts.googleapis.com/css?family=Raleway|Roboto');;
+
 *,
 *::before,
 *::after {
@@ -47,7 +53,7 @@ html {
 }
 
 body {
-  @import url('https://fonts.googleapis.com/css?family=Raleway|Roboto');
+ 
   font-family: 'Raleway', sans-serif;
   color: #6d5d4b;
   font-weight: 300;
@@ -61,6 +67,10 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 5rem;
+}
+
+button: {
+  font-family: "Raleway", sans-serif
 }
   `
 

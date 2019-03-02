@@ -1,7 +1,10 @@
 import React from 'react'
 import { Mutation, withApollo } from 'react-apollo'
 import { gql } from 'apollo-boost'
+import styled from 'styled-components'
 import redirect from '../lib/redirect'
+import Input from './styled/Input'
+import Button from './styled/Button'
 
 const SIGN_IN = gql`
   mutation Signin($email: String!, $password: String!) {
@@ -9,6 +12,14 @@ const SIGN_IN = gql`
       token
     }
   }
+`
+
+const Container = styled.div`
+  min-height: 100vh;
+  background: ${props => props.theme.colors.primary.dark};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 // TODO: Find a better name for component.
@@ -33,41 +44,44 @@ const SigninBox = ({ client }) => {
       }}
     >
       {(signIn, { data, error }) => (
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            e.stopPropagation()
+        <Container>
+          <form
+            onSubmit={e => {
+              e.preventDefault()
+              e.stopPropagation()
 
-            signIn({
-              variables: {
-                email: email.value,
-                password: password.value,
-              },
-            })
+              signIn({
+                variables: {
+                  email: email.value,
+                  password: password.value,
+                },
+              })
 
-            email.value = password.value = ''
-          }}
-        >
-          {error && <p>No user found with that information.</p>}
-          <input
-            name="email"
-            placeholder="Email"
-            ref={node => {
-              email = node
+              email.value = password.value = ''
             }}
-          />
-          <br />
-          <input
-            name="password"
-            placeholder="Password"
-            ref={node => {
-              password = node
-            }}
-            type="password"
-          />
-          <br />
-          <button type="submit">Sign in</button>
-        </form>
+          >
+            {error && <p>No user found with that information.</p>}
+            <Input
+              name="email"
+              type="email"
+              placeholder="Email"
+              ref={node => {
+                email = node
+              }}
+            />
+            <br />
+            <Input
+              name="password"
+              placeholder="Password"
+              ref={node => {
+                password = node
+              }}
+              type="password"
+            />
+            <br />
+            <Button type="submit">Sign in</Button>
+          </form>
+        </Container>
       )}
     </Mutation>
   )

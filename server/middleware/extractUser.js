@@ -4,35 +4,39 @@ const mongoose = require('mongoose')
 const User = mongoose.model('User')
 const { SECRET } = process.env
 
-const parseBearerToken = req => {
-  const auth = req.headers ? req.headers.authorization || null : null
-  if (!auth) {
+const parseBearerToken = bearerToken => {
+  if (!bearerToken) {
     return null
   }
 
-  const parts = auth.split(' ')
-  // Malformed header.
-  if (parts.length < 2) {
+  const [schema, token] = bearerToken.split(' ')
+
+  if (schema.toLowerCase() !== 'bearer') {
     return null
   }
 
-  const schema = parts.shift().toLowerCase()
-  const token = parts.join(' ')
-  if (schema !== 'bearer') {
-    return null
-  }
-
-  return token
+  return token.trim()
 }
 
-const extractUser = async (req, res, done) => {
-  const token = parseBearerToken(req)
+const extractUser = (req, res, next) => {
+  const bearerToken = req.headers.authorization
+  const token = parseBearerToken(bearerToken)
+
   if (token) {
-    const decoded = jwt.verify(token, SECRET)
-    const user = await User.findById(decoded.sub).then(payload => payload)
-    req.user = user
+    jwt.verify(token, SECRET, (err, decoded) => {
+      if (err) {
+        return err
+      }
+      const user = User.findById(decoded.sub)
+        .then(payload => payload)
+        .catch(e => console.log(e))
+      req.user = user
+    })
   }
-  done()
+  else {
+    console.log('no token')
+  }
+  next()
 }
 
 module.exports = extractUser

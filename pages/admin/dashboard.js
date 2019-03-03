@@ -25,7 +25,7 @@ export default class Signin extends React.Component {
     /*This was the signout function provided by the docs.
       however it does not seem to be redirecting correctly */
     apolloClient.cache.reset().then(() => {
-      localStorage.removeItem('token')
+      //apolloClient.resetStore()
       //remove token from localStorage
 
       // Redirect to a more useful page when signed out

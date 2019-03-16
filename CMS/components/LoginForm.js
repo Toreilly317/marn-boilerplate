@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Mutation, withApollo } from 'react-apollo'
+import {
+  Button, Container, Form, FormGroup, FormText, Label, Input,
+} from 'reactstrap'
+import cookie from 'cookie'
 import gql from 'graphql-tag'
-import redirect from '../lib/redirect'
-import Input from './styled/Input'
-import Button from './styled/Button'
+import redirect from '../../lib/redirect'
 
 const SIGN_IN = gql`
   mutation Signin($email: String!, $password: String!) {

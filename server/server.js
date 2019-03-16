@@ -21,14 +21,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true }).then(() => console.log('D
 nextApp.prepare().then(() => {
   const app = express()
 
-  // add user object to every request
-  // app.use(passport.initialize())
-  // require('../lib/passport')(passport)
-  // app.use(passport.authenticate('jwt', { session: false }))
-
   app.use(extractUser)
-
-  // check headers
 
   // start apollo server
   const server = new ApolloServer({
@@ -50,6 +43,12 @@ nextApp.prepare().then(() => {
   app.get('/post/:id', (req, res) => {
     const actualPage = '/post'
     const queryParams = { title: req.params.id }
+    nextApp.render(req, res, actualPage, queryParams)
+  })
+
+  app.get('/admin', (req, res) => {
+    const actualPage = '/admin/dashboard'
+    const queryParams = {}
     nextApp.render(req, res, actualPage, queryParams)
   })
 

@@ -25,16 +25,14 @@ const extractUser = (req, res, next) => {
   if (token) {
     jwt.verify(token, SECRET, (err, decoded) => {
       if (err) {
+        console.log('ERROR', err)
         return err
       }
-      const user = User.findById(decoded.sub)
-        .then(payload => payload)
-        .catch(e => console.log(e))
-      req.user = user
+      req.user = {
+        id: decoded.sub,
+        email: decoded.email,
+      }
     })
-  }
-  else {
-    console.log('no token')
   }
   next()
 }

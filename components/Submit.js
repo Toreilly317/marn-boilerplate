@@ -1,6 +1,6 @@
-import { ApolloConsumer } from 'react-apollo'
-import gql from 'graphql-tag'
-import { allPostsQuery, allPostsQueryVars } from './UserList'
+import { ApolloConsumer } from 'react-apollo';
+import gql from 'graphql-tag';
+import { allPostsQuery, allPostsQueryVars } from './UserList/UserList';
 
 export default function Submit() {
   return (
@@ -14,16 +14,16 @@ export default function Submit() {
         </form>
       )}
     </ApolloConsumer>
-  )
+  );
 }
 
 function handleSubmit(event, client) {
-  event.preventDefault()
-  const form = event.target
-  const formData = new window.FormData(form)
-  const title = formData.get('title')
-  const url = formData.get('url')
-  form.reset()
+  event.preventDefault();
+  const form = event.target;
+  const formData = new window.FormData(form);
+  const title = formData.get('title');
+  const url = formData.get('url');
+  form.reset();
 
   client.mutate({
     mutation: gql`
@@ -41,16 +41,16 @@ function handleSubmit(event, client) {
     update: (proxy, { data: { createPost } }) => {
       const data = proxy.readQuery({
         query: allPostsQuery,
-        variables: allPostsQueryVars
-      })
+        variables: allPostsQueryVars,
+      });
       proxy.writeQuery({
         query: allPostsQuery,
         data: {
           ...data,
-          allPosts: [createPost, ...data.allPosts]
+          allPosts: [createPost, ...data.allPosts],
         },
-        variables: allPostsQueryVars
-      })
-    }
-  })
+        variables: allPostsQueryVars,
+      });
+    },
+  });
 }

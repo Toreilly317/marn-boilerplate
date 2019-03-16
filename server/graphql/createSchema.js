@@ -1,15 +1,19 @@
-const merge = require('lodash').merge
+const { merge } = require('lodash')
 
 // types
-const userTypes = require('./user/types')
-const postTypes = require('./post/types')
-
+const fileTypes = require('./types/fileTypes')
+const userTypes = require('./types/userTypes')
+const postTypes = require('./types/postTypes')
 // resolvers
-const userResolvers = require('./user/userResolvers')
-const postResolvers = require('./post/resolvers')
+const userResolvers = require('./resolvers/userResolvers')
+const postResolvers = require('./resolvers/postResolvers')
+const fileResolvers = require('./resolvers/fileResolvers')
 
-const types = [userTypes, postTypes]
-const resolvers = merge(userResolvers, postResolvers)
+const types = [fileTypes, userTypes, postTypes]
+const resolvers = merge(fileResolvers, userResolvers, postResolvers)
+
+console.log(Object.keys(types))
+console.log(Object.keys(resolvers))
 
 module.exports = {
   types,

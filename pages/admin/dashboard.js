@@ -1,5 +1,6 @@
 import React from 'react'
 import { ApolloConsumer } from 'react-apollo'
+import Layout from '../../CMS/Layout/Layout'
 
 import redirect from '../../lib/redirect'
 import checkLoggedIn from '../../lib/checkLoggedIn'
@@ -36,10 +37,12 @@ export default class Signin extends React.Component {
     return (
       <ApolloConsumer>
         {client => (
-          <div>
-            Hello {this.props.loggedInUser.firstName}!<br />
-            <button onClick={this.signout(client)}>Sign out</button>
-          </div>
+          <Layout>
+            <div>
+              Hello {this.props.loggedInUser.firstName}!<br />
+              <button onClick={this.signout(client)}>Sign out</button>
+            </div>
+          </Layout>
         )}
       </ApolloConsumer>
     )

@@ -1,14 +1,19 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Header from './Header'
+import Footer from './Footer'
 
-const Layout = () => (
-  <div id="App">
+const Layout = ({ children }) => (
+  <div>
     <Header />
-    <div id="page-wrap">
-      <h1>Cool Restaurant 🍔🍕</h1>
-      <h2>Check out our offerings in the sidebar!</h2>
-    </div>
+    <section>{children}</section>
+    <Footer />
+    <style jsx>
+      {`
+        h1 {
+          color: red;
+        }
+      `}
+    </style>
   </div>
 )
 

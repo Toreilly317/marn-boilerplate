@@ -15,9 +15,12 @@
   "plugins": ["react"],
   "rules": {
     "react/prop-types": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "react/react-in-jsx-scope": 0,
     "react/jsx-uses-vars": [2],
     "semi": "off",
     "no-console": 0,
+    "jsx-one-expression-per-line": "off",
     "arrow-parens": 0,
     "no-debugger": 2,
     "one-var": 0,

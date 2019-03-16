@@ -1,14 +1,40 @@
 import React from 'react'
-import { Mutation, withApollo } from 'react-apollo'
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import gql from 'graphql-tag'
-import redirect from '../lib/redirect'
-import Input from './styled/Input'
-import Button from './styled/Button'
+import styled from 'styled-components'
 
-const SIGN_IN = gql`
-  mutation Signin($email: String!, $password: String!) {
-    signIn(email: $email, password: $password) {
-      token
+
+const PostListItem = styled.div``
+
+export default ({ post }) => (
+  <PostListItem>
+    <ListGroup>
+      {posts.map(post => {
+        return (
+          <ListGroupItem key={post.id} id={post.id}>{post.title}</ListGroupItem>
+        )
+      })}
+      
+      
+    </ListGroup>
+  </PostListItem>
+)
+
+
+import React, { useState } from 'react'
+import { Mutation, withApollo } from 'react-apollo'
+
+
+
+const All_POSTS = gql`
+  mutation allPosts($limit: number!) {
+    allPosts(limit: $limit) {
+      title
+      body
+      author{
+        firstname
+        lastName
+      }
     }
   }
 `
@@ -24,33 +50,25 @@ const SignInForm = ({ client }) => {
 
   return (
     <Mutation
-      mutation={SIGN_IN}
+      mutation={All_POSTS}
       onCompleted={data => {
-        document.cookie = cookie.serialize('token', data.signIn.token, {
-          maxAge: 30 * 24 * 60 * 60, // 30 days
-        })
-        // Force a reload of all the current queries now that the user is
-        // logged in
-        client.cache.reset().then(() => {
-          redirect({}, '/admin/dashboard')
-        })
+        
       }}
       onError={error => {
         // If you want to send error to external service?
         console.log(error)
       }}
     >
-      {(signIn, { data, error }) => (
+      {(allPosts, { data, error }) => (
         <Container>
           <Form
             onSubmit={e => {
               e.preventDefault()
               e.stopPropagation()
 
-              signIn({
+              allPosts({
                 variables: {
-                  email: state.email,
-                  password: state.password,
+                  limit: 5,
                 },
               })
 

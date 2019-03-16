@@ -5,6 +5,7 @@ import Head from 'next/head'
 import React from 'react'
 import { css, ThemeProvider } from 'styled-components'
 import withApollo from '../lib/withApollo'
+import '../lib/style.css'
 
 const theme = {
   colors: {
@@ -12,7 +13,6 @@ const theme = {
     secondary: '#494850',
     accent: '#978897',
   },
-
   sizes: {
     xsm: '.5rem',
     sm: '1rem',
@@ -30,58 +30,13 @@ const theme = {
   },
 }
 
-const GlobalStyle = createGlobalStyle`
- @import url('https://fonts.googleapis.com/css?family=Raleway|Roboto');;
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: inherit;
-}
-
-html {
-  box-sizing: border-box;
-  font-size: 62.5%;
-}
-
-@media only screen and (max-width: 75em) {
-  html {
-    font-size: 50%;
-  }
-}
-
-body {
- 
-  font-family: 'Raleway', sans-serif;
-  color: #6d5d4b;
-  font-weight: 300;
-  line-height: 1.6;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Nunito', sans-serif;
-  text-transform: uppercase;
-}
-
-h1 {
-  font-size: 5rem;
-}
-
-button: {
-  font-family: "Raleway", sans-serif
-}
-  `
-
 class MyApp extends App {
   render() {
     const { Component, pageProps, apolloClient } = this.props
     return (
       <Container>
-        <GlobalStyle />
         <Head>
-          <title>Charm CMS</title>
+          <title>NextPress</title>
         </Head>
         <ApolloProvider client={apolloClient}>
           <ThemeProvider theme={theme}>

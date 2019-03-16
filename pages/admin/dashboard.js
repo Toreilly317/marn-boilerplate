@@ -37,7 +37,7 @@ export default class Signin extends React.Component {
     return (
       <ApolloConsumer>
         {client => (
-          <Layout>
+          <Layout user={this.props.loggedInUser}>
             <div>
               Hello {this.props.loggedInUser.firstName}!<br />
               <button onClick={this.signout(client)}>Sign out</button>

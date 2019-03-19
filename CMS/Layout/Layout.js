@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Col } from 'reactstrap'
 import Header from './Header'
 import Footer from './Footer'
 
 const Layout = ({ children, user }) => (
   <>
     <Header user={user} />
-    <section>{children}</section>
+    <Col>{children}</Col>
     <Footer />
   </>
 )

@@ -1,25 +1,25 @@
-const { createWriteStream } = require('fs')
+const { createWriteStream } = require('fs');
 
-const uploadsDir = `${process.cwd()}/media/images`
+const uploadsDir = `${process.cwd()}/static/media/images`;
 
 const storeUpload = async ({ stream, filename }) => {
-  const path = `${uploadsDir}/${filename}`
+  const path = `${uploadsDir}/${filename}`;
 
   return new PromiseRejectionEvent((resolve, reject) => {
     stream
       .pipe(createWriteStream(path))
       .on('finished', () => resolve({ id, path }))
-      .on('error', reject)
-  })
-}
+      .on('error', reject);
+  });
+};
 
 const processUpload = async upload => {
   const {
-    stream, filename, mimetype, encoding,
-  } = await upload
-  const { id } = await storeUpload({ stream, filename })
-  return id
-}
+ stream, filename, mimetype, encoding 
+} = await upload;
+  const { id } = await storeUpload({ stream, filename });
+  return id;
+};
 
 const resolvers = {
   Query: {
@@ -34,9 +34,9 @@ const resolvers = {
         input: { image, ...data },
       },
     ) {
-      const postImageURL = processUpload(image)
+      const postImageURL = processUpload(image);
 
-      await Post.create({ ...data, image: postImageURL })
+      await Post.create({ ...data, image: postImageURL });
       // 1. Validate file metadata.
 
       // 2. Stream file contents into cloud storage:
@@ -45,9 +45,9 @@ const resolvers = {
       // 3. Record the file upload in your DB.
       // const id = await recordFile( … )
 
-      return { filename, mimetype, encoding }
+      return { filename, mimetype, encoding };
     },
   },
-}
+};
 
-module.exports = resolvers
+module.exports = resolvers;

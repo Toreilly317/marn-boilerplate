@@ -1,71 +1,46 @@
-import React, { useState } from 'react'
+import { useState } from 'react';
+import { useForm, useField } from 'react-final-form-hooks';
+import styled from 'styled-components';
 
-import AdminLayout from '../../../CMS/Layout/Layout'
+import { Mutation, withApollo } from 'react-apollo';
+import gql from 'graphql-tag';
+import AdminLayout from '../../../CMS/Layout/Layout';
+
+const Form = styled.div`
+  display: flex;
+  font-size: 2rem;
+  padding: ${props => props.theme.sizes.sm};
+  background: ${props => props.theme.colors.black};
+`;
+
+const StatusRadioButtons = styled.div``;
 
 const CreatePostPage = () => {
-  const [state, setState] = useState({
-    title: '',
-    body: '',
-    image: '',
-  })
-
-  const handleOnChange = e => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const handleFileInput = e => {
-    const imageFile = e.target.files[0]
-    console.log(imageFile)
-
-    setState({
-      ...state,
-      file: imageFile,
-    })
-  }
-
-  const clearForm = () => {
-    setState({})
-  }
-
-  const handleOnSubmit = e => {
-    e.preventDefault()
-    console.log(state)
-  }
-
+  const [state, setState] = useState({});
   return (
     <AdminLayout>
-      <h1>Create Post</h1>
-      <form onSubmit={e => handleOnSubmit(e)}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={state.title}
-          onChange={e => handleOnChange(e)}
-        />
-        <textarea
-          type="text"
-          name="body"
-          placeholder="Post Body..."
-          value={state.body}
-          onChange={e => handleOnChange(e)}
-        />
-        <input type="file" name="image" onChange={e => handleFileInput(e)} />
-        <button type="submit">Save</button>
-        <button type="button" onClick={() => clearForm()}>
-
-
-
-
-
-          Clear
-        </button>
-      </form>
+      <Form action="">
+        <div>
+          <input type="text" placeholder="title" value={state.title} />
+          <textarea name="body" value={state.body} placeholder="body" />
+        </div>
+        <StatusRadioButtons>
+          <div>
+            <input type="radio" name="status" value="draft" />
+            Draft
+          </div>
+          <div>
+            <input type="radio" name="status" value="published" />
+            Published
+          </div>
+          <div>
+            <input type="radio" name="status" value="removed" />
+            Removed
+          </div>
+        </StatusRadioButtons>
+      </Form>
     </AdminLayout>
-  )
-}
+  );
+};
 
-export default CreatePostPage
+export default CreatePostPage;

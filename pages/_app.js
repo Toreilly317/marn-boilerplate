@@ -1,17 +1,58 @@
-import { ApolloProvider } from 'react-apollo'
-import { createGlobalStyle } from 'styled-components'
-import App, { Container } from 'next/app'
-import Head from 'next/head'
-import React from 'react'
-import { css, ThemeProvider } from 'styled-components'
-import withApollo from '../lib/withApollo'
-import '../lib/style.css'
+import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
+import App, { Container } from 'next/app';
+import Head from 'next/head';
+import React from 'react';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import withApollo from '../lib/withApollo';
+
+const GlobalStyle = createGlobalStyle`
+  *,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+/* @media only screen and (max-width: 75em) {
+  html {
+    font-size: 50%;
+  } */
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  background: #212121;
+  color:
+  font-size: 1.6rem;
+  color: #535353;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+a {
+    color: currentColor;
+    text-decoration: none;
+    &:visited {
+      color: currentColor;
+    }
+  }
+`;
 
 const theme = {
   colors: {
     primary: '#2C2C34',
     secondary: '#494850',
     accent: '#978897',
+    black: '#121212',
+    black2: '#212121',
+    gray: '#535353',
+    gray2: '#b3b3b3',
   },
   sizes: {
     xsm: '.5rem',
@@ -28,24 +69,33 @@ const theme = {
     xl: '3rem',
     xxl: '5rem',
   },
-}
+};
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps, apolloClient } = this.props
+    const { Component, pageProps, apolloClient } = this.props;
     return (
       <Container>
         <Head>
           <title>NextPress</title>
+          <meta charSet="UTF-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         </Head>
         <ApolloProvider client={apolloClient}>
-          <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
-          </ThemeProvider>
+          <ApolloHooksProvider>
+            <GlobalStyle />
+            <ThemeProvider theme={theme}>
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </ApolloHooksProvider>
         </ApolloProvider>
       </Container>
-    )
+    );
   }
 }
 
-export default withApollo(MyApp)
+export default withApollo(MyApp);

@@ -1,16 +1,3 @@
-const withCSS = require('@zeit/next-css')
-/* Without CSS Modules, with PostCSS */
-module.exports = withCSS()
+// const withCSS = require('@zeit/next-css');
 
-/* With CSS Modules */
-// module.exports = withCSS({ cssModules: true })
-
-/* With additional configuration on top of CSS Modules */
-/*
-module.exports = withCSS({
-  cssModules: true,
-  webpack: function (config) {
-    return config;
-  }
-});
-*/
+// module.exports = withCSS();

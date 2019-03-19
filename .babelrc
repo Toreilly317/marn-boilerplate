@@ -8,6 +8,16 @@
         "displayName": true,
         "preprocess": true
       }
+    ],
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "CMS": "./CMS",
+          "components": "./components"
+        }
+      }
     ]
   ]
 }

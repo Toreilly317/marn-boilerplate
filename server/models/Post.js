@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema
+const { Schema } = mongoose;
 
 const PostSchema = new Schema(
   {
@@ -13,9 +13,17 @@ const PostSchema = new Schema(
       type: String,
       required: true,
     },
+
     image: {
-      src: String,
+      src: {
+        type: String,
+      },
     },
+
+    category: {
+      type: [String],
+    },
+
     status: {
       type: String,
       enum: ['removed', 'draft', 'published', 'locked'],
@@ -30,8 +38,8 @@ const PostSchema = new Schema(
   {
     timestamps: true,
   },
-)
+);
 
-const Post = mongoose.model('Post', PostSchema)
+const Post = mongoose.model('Post', PostSchema);
 
-module.exports = Post
+module.exports = Post;

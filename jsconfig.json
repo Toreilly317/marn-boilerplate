@@ -1,19 +1,14 @@
+/* This is so that autocomplete still works */
+
 {
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "*": [
-        "src/*"
-      ],
-      "components/*": [
-        "components/*"
-      ],
-      "hooks/*": [
-        "hooks/*"
-      ],
-      "styled/*": [
-        "styled/*"
-      ]
+      "*": ["/*"],
+      "components/*": ["components/*"],
+      "CMS/*": ["CMS/*"],
+      "hooks/*": ["hooks/*"],
+      "styled/*": ["styled/*"]
     }
   }
 }

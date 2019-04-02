@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {
- Form, FormGroup, Input, TagInput 
+ Form, FormGroup, Input, TextArea, TagInput 
 } from '../common';
 
 const CreatePostForm = () => {
@@ -10,11 +10,11 @@ const CreatePostForm = () => {
   return (
     <Form>
       <FormGroup>
-        <div>Title: </div>
         <Input
           value={title}
           onChange={e => setTitle(e.target.value)}
           type="string"
+          placeholder="Enter Title Here"
         />
       </FormGroup>
       <FormGroup>
@@ -22,7 +22,7 @@ const CreatePostForm = () => {
         <TagInput onChange={t => setTags(t)} />
       </FormGroup>
       <FormGroup>
-        <textarea />
+        <TextArea cols="30" rows="30" />
       </FormGroup>
       <FormGroup>
         <Input type="string" />

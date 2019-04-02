@@ -30,7 +30,7 @@ body {
   font-family: "Nunito", sans-serif;
   background: #212121;
   font-size: 1.6rem;
-  color: #535353;
+  color: white;
   
   line-height: 1.6;
 }

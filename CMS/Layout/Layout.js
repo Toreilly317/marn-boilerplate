@@ -1,15 +1,25 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Col } from 'reactstrap'
-import Header from './Header'
-import Footer from './Footer'
+import { useState } from 'react';
+import Header from './Header';
+import Menu from './Menu';
 
-const Layout = ({ children, user }) => (
-  <>
-    <Header user={user} />
-    <Col>{children}</Col>
-    <Footer />
-  </>
-)
+const Layout = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-export default Layout
+  return (
+    <>
+      <Menu
+        isOpen={isOpen}
+        closeMenu={() => {
+          setIsOpen(false);
+        }}
+      />
+
+      <div>
+        <Header setMenuOpen={() => setIsOpen(true)} />
+        <div>{children}</div>
+      </div>
+    </>
+  );
+};
+
+export default Layout;

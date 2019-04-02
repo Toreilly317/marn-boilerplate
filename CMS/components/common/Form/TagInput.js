@@ -1,29 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
-const Tag = ({ tag }) => <div>{tag}</div>;
+const TagList = styled.div`
+  display: flex;
+  & div {
+    margin: 5px;
+  }
+`;
+
+const Tag = ({ tag }) => (
+  <div>
+    <span>X</span>
+    <span>{tag}</span>
+  </div>
+);
 
 const TagInput = ({ onChange }) => {
+  const [state, setState] = useState('');
   const [tags, setTags] = useState([]);
 
-  const handleOnChange = e => {
-    const newTags = e.target.value.split(',').map(tag => tag.trim());
-    setTags(newTags);
+  useEffect(() => {
+    setTags(state.split(',').filter(tag => tag.trim() !== '' && tag.trim()));
     onChange(tags);
-  };
+  }, [state]);
 
   return (
     <div>
-      <div>
-        {tags.map((tag, i) => (
-          <Tag key={i} tag={tag} />
-        ))}
-      </div>
       <input
         placeholder="Tags"
         type="text"
-        value={tags}
-        onChange={handleOnChange}
+        value={state}
+        onChange={e => setState(e.target.value)}
       />
+      <TagList>
+        {tags.map((tag, i) => (
+          <Tag key={i} tag={tag} />
+        ))}
+      </TagList>
     </div>
   );
 };

@@ -1,12 +1,25 @@
-import React, { useState, useEffect } from 'react';
-
+import React from 'react';
 import Link from 'next/link';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-import { ListGroup, ListGroupItem } from 'reactstrap';
-import HelloWorld from 'CMS/Hello';
+import styled from 'styled-components';
 import AdminLayout from 'CMS/Layout/Layout';
 import PostList from 'CMS/components/PostList/PostList';
+
+const Row = styled.div`
+  display: flex;
+  align-items: center;
+  h1 {
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+`;
+
+const PageHeader = styled.div`
+  font-size: 2rem;
+  padding: 0.5rem;
+`;
 
 const GET_POSTS = gql`
   {
@@ -27,13 +40,12 @@ const GET_POSTS = gql`
 
 const PostDashboard = props => (
   <AdminLayout>
-    <div>
-      <HelloWorld />
-      <div>Posts</div>
-      <Link href="/admin/post/create">
-        <a>+ Add New</a>
-      </Link>
-    </div>
+    <Row>
+      <PageHeader>Posts</PageHeader>
+      <div>
+        <button type="button">Create New</button>
+      </div>
+    </Row>
     <Query query={GET_POSTS}>
       {({ loading, error, data }) => {
         if (loading) return 'Loading...';

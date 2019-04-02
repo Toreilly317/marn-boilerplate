@@ -34,6 +34,15 @@ const PostSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
+
+    meta: {
+      tags: [String],
+      categories: [String],
+      views: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
   {
     timestamps: true,

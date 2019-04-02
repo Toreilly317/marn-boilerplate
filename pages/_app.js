@@ -7,7 +7,8 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import withApollo from '../lib/withApollo';
 
 const GlobalStyle = createGlobalStyle`
-  *,
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+*,
 *::before,
 *::after {
   margin: 0;
@@ -19,19 +20,18 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
 }
-/* @media only screen and (max-width: 75em) {
+@media only screen and (max-width: 75em) {
   html {
     font-size: 50%;
-  } */
+  }
 }
 
 body {
   font-family: "Nunito", sans-serif;
   background: #212121;
-  color:
   font-size: 1.6rem;
   color: #535353;
-  font-weight: 300;
+  
   line-height: 1.6;
 }
 

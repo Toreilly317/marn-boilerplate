@@ -14,18 +14,18 @@ class Example extends Component {
 
   render() {
     return (
-      <div class="wrapper">
+      <div className="wrapper">
         <!-- Sidebar -->
     <nav id="sidebar">
-          <div class="sidebar-header">
+          <div className="sidebar-header">
             <h3>Bootstrap Sidebar</h3>
           </div>
 
-          <ul class="list-unstyled components">
+          <ul className="list-unstyled components">
             <p>Dummy Heading</p>
-            <li class="active">
-              <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-              <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li className="active">
+              <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Home</a>
+              <ul className="collapse list-unstyled" id="homeSubmenu">
                 <li>
                   <a href="#">Home 1</a>
                 </li>
@@ -41,8 +41,8 @@ class Example extends Component {
               <a href="#">About</a>
             </li>
             <li>
-              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-              <ul class="collapse list-unstyled" id="pageSubmenu">
+              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Pages</a>
+              <ul className="collapse list-unstyled" id="pageSubmenu">
                 <li>
                   <a href="#">Page 1</a>
                 </li>
@@ -66,11 +66,11 @@ class Example extends Component {
         <!-- Page Content -->
     <div id="content">
 
-          <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
+          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <div className="container-fluid">
 
-              <button type="button" id="sidebarCollapse" class="btn btn-info">
-                <i class="fas fa-align-left"></i>
+              <button type="button" id="sidebarCollapse" className="btn btn-info">
+                <i className="fas fa-align-left"></i>
                 <span>Toggle Sidebar</span>
               </button>
             </div>

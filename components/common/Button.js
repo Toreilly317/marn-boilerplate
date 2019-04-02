@@ -1,17 +1,11 @@
-import styled from "styled-components"
-
+import styled from 'styled-components';
 
 const Button = styled.button`
-display: flex;
-align-items: center;
-justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: ${props => props.theme.colors.black};
-  padding: ${props => props.}
-`
+  padding: ${props => props.theme.sizes.md};
+`;
 
-export default ({ children }) => {
-  return (
-    <Button>{children}</Button>
-  )
-  
-}
+export default ({ children }) => <Button>{children}</Button>;

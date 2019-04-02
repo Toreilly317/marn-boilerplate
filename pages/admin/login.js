@@ -29,7 +29,7 @@ SignInPage.getInitialProps = async context => {
 
 export default SignInPage
 
-// export default class Signin extends React.Component {
+// export default className Signin extends React.Component {
 //   static async getInitialProps(context) {
 //     const { loggedInUser } = await checkLoggedIn(context.apolloClient)
 

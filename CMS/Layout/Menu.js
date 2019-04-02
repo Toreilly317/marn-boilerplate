@@ -61,7 +61,7 @@ const Menu = ({ isOpen, closeMenu }) => (
     </div>
     <ul>
       <MenuItem href="#" text="Analytics" icon="🕵" />
-      <MenuItem href="admin/post/dashboard" text="Posts" icon="🗏" />
+      <MenuItem href="/admin/post/dashboard" text="Posts" icon="🗏" />
       <MenuItem href="/pages/dashboard" text="Pages" icon="🗐" />
       <MenuItem href="#" text="Users" icon="🐛" />
       <MenuItem href="#" text="Mesages" icon="📥" />
